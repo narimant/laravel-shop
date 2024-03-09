@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\Ticket\TicketCategoryController;
 use App\Http\Controllers\Admin\Ticket\TicketPriorityController;
 use App\Http\Controllers\Admin\Content\CommentController as ContentCommentController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
+use App\Http\Controllers\Admin\Ticket\TicketAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -344,7 +345,11 @@ Route::prefix('admin')->namespace('Admin')->group(function(){
 
     });
 
-
+  //admin
+  Route::prefix('admin')->group(function(){
+    Route::get('/', [TicketAdminController::class, 'index'])->name('admin.ticket.admin.index');
+    Route::get('/set/{admin}', [TicketAdminController::class, 'set'])->name('admin.ticket.admin.set');
+});
   //priority
          Route::prefix('priority')->group(function(){
             Route::get('/', [TicketPriorityController::class, 'index'])->name('admin.ticket.priority.index');
