@@ -1,0 +1,7 @@
+{
+    "The :attribute must contain at least one uppercase and one lowercase letter." : "کلمه عبور باید حداقل یک حرف بزرگ و یک حرف کوچک داشته باشد.",
+    "The :attribute must contain at least one letter" : "کلمه عبور باید حداقل یک حرف داشته باشد.",
+    "The :attribute must contain at least one symbol." : "کلمه عبور ویژگی : باید حداقل یک نماد داشته باشد.",
+    "The :attribute must contain at least one number." : "کلمه عبور ویژگی : باید حداقل یک عدد داشته باشد.",
+    "The given :attribute has appeared in a data leak. Please choose a different :attribute." : "کلمه عبور داده شده در نشت داده ظاهر شده است. لطفاً یک :ویژگی متفاوت انتخاب کنید."
+}

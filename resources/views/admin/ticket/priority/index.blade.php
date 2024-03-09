@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('head-tag')
-<title>اطلاعیه ایمیلی</title>
+<title>اولویت</title>
 @endsection
 
 @section('content')
@@ -9,8 +9,8 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#">اطلاع رسانی</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> اطلاعیه ایمیلی</li>
+      <li class="breadcrumb-item font-size-12"> <a href="#">بخش تیکت ها</a></li>
+      <li class="breadcrumb-item font-size-12 active" aria-current="page">اولویت</li>
     </ol>
   </nav>
 
@@ -20,12 +20,14 @@
         <section class="main-body-container">
             <section class="main-body-container-header">
                 <h5>
-                   اطلاعیه ایمیلی
+                    اولویت
                 </h5>
             </section>
 
+            @include('admin.alerts.alert-section.success')
+
             <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                <a href="{{ route('admin.notify.email.create') }}" class="btn btn-info btn-sm">ایجاد اطلاعیه ایمیلی</a>
+                <a href="{{ route('admin.ticket.priority.create') }}" class="btn btn-info btn-sm">ایجاد اولویت</a>
                 <div class="max-width-16-rem">
                     <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                 </div>
@@ -36,39 +38,37 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>عنوان اطلاعیه</th>
-                            <th>متن ایمیل</th>
-                            <th>تاریخ ارسال	</th>
+                            <th>نام اولویت</th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($emails as $key => $email)
+
+                        @foreach ($ticketPriorities as $key => $ticketPriority)
 
                         <tr>
-                            <th>{{ $key + 1 }}</th>
-                            <td>{{ $email->subject }}</td>
-                            <td>{{ $email->body }}</td>
-                            <td>{{ jalaliDate($email->published_at, 'H:i:s Y-m-d') }}</td>
+                            <th>{{ $key += 1 }}</th>
+                            <td>{{ $ticketPriority->name }}</td>
                             <td>
                                 <label>
-                                    <input id="{{ $email->id }}" onchange="changeStatus({{ $email->id }})" data-url="{{ route('admin.notify.email.status', $email->id) }}" type="checkbox" @if ($email->status === 1)
+                                    <input id="{{ $ticketPriority->id }}" onchange="changeStatus({{ $ticketPriority->id }})" data-url="{{ route('admin.ticket.priority.status', $ticketPriority->id) }}" type="checkbox" @if ($ticketPriority->status === 1)
                                     checked
                                     @endif>
                                 </label>
                             </td>
                             <td class="width-16-rem text-left">
-                                <a href="{{ route('admin.notify.email-file.index', $email->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-file"></i> فایل های ضمیمه شده</a>
-                                <a href="{{ route('admin.notify.email.edit', $email->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <form class="d-inline" action="{{ route('admin.notify.email.destroy', $email->id) }}" method="post">
+                                <a href="{{ route('admin.ticket.priority.edit', $ticketPriority->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                <form class="d-inline" action="{{ route('admin.ticket.priority.destroy', $ticketPriority->id) }}" method="post">
                                     @csrf
                                     {{ method_field('delete') }}
                                 <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                            </form>                            </td>
+                            </form>
+                            </td>
                         </tr>
 
                         @endforeach
+
 
                     </tbody>
                 </table>
@@ -79,9 +79,6 @@
 </section>
 
 @endsection
-
-
-
 @section('script')
 
     <script type="text/javascript">
@@ -90,6 +87,7 @@
             var url = element.attr('data-url')
             var elementValue = !element.prop('checked');
 
+
             $.ajax({
                 url : url,
                 type : "GET",
@@ -97,11 +95,11 @@
                     if(response.status){
                         if(response.checked){
                             element.prop('checked', true);
-                            successToast('ایمیل  با موفقیت فعال شد')
+                            successToast('اولویت با موفقیت فعال شد')
                         }
                         else{
                             element.prop('checked', false);
-                            successToast('ایمیل  با موفقیت غیر فعال شد')
+                            successToast('اولویت با موفقیت غیر فعال شد')
                         }
                     }
                     else{

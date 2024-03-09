@@ -27,6 +27,37 @@ class SettingController extends Controller
         return view('admin.setting.index', compact('setting'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -54,7 +85,7 @@ class SettingController extends Controller
         {
             if(!empty($setting->logo))
             {
-                $imageService->deleteDirectoryAndFiles($setting->logo);
+                $imageService->deleteImage($setting->logo);
             }
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'setting');
             $imageService->setImageName('logo');
@@ -69,7 +100,7 @@ class SettingController extends Controller
         {
             if(!empty($setting->icon))
             {
-                $imageService->deleteDirectoryAndFiles($setting->icon);
+                $imageService->deleteImage($setting->icon);
             }
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'setting');
             $imageService->setImageName('icon');
@@ -84,4 +115,21 @@ class SettingController extends Controller
         return redirect()->route('admin.setting.index')->with('swal-success', 'تنظیمات سایت  شما با موفقیت ویرایش شد');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }
