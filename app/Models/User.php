@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Ticket\Ticket;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Ticket\TicketAdmin;
-use App\Models\User\Role;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -85,5 +84,10 @@ class User extends Authenticatable
 
     public function roles(){
         return $this->belongsToMany(Role::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }
