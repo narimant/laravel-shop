@@ -49,9 +49,9 @@
                 </section>
                 <section class="sidebar-dropdown">
                     <a href="{{ route('admin.market.payment.index') }}">تمام پرداخت ها</a>
-                    <a href="{{ route('admin.market.payment.index') }}">پرداخت های آنلاین</a>
-                    <a href="{{ route('admin.market.payment.index') }}">پرداخت های آفلاین</a>
-                    <a href="{{ route('admin.market.payment.index') }}">پرداخت در محل</a>
+                    <a href="{{ route('admin.market.payment.online') }}">پرداخت های آنلاین</a>
+                    <a href="{{ route('admin.market.payment.offline') }}">پرداخت های آفلاین</a>
+                    <a href="{{ route('admin.market.payment.cash') }}">پرداخت در محل</a>
                 </section>
             </section>
 
@@ -100,6 +100,10 @@
                 <i class="fas fa-bars"></i>
                 <span>پیج ساز</span>
             </a>
+            <a href="{{ route('admin.content.banner.index') }}" class="sidebar-link">
+                <i class="fas fa-bars"></i>
+                <span>بنر ها</span>
+            </a>
 
 
 
@@ -143,6 +147,11 @@
             <a href="{{ route('admin.ticket.closeTickets') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>تیکت های بسته</span>
+            </a>
+
+            <a href="{{ route('admin.ticket.index') }}" class="sidebar-link">
+                <i class="fas fa-bars"></i>
+                <span>همه ی تیکت ها</span>
             </a>
 
 

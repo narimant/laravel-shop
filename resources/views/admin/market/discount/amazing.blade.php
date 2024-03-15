@@ -44,7 +44,9 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($amazingSales as $amazingSale)
+
                         <tr>
                             <th>{{ $loop->iteration }}</th>
                             <th>{{ $amazingSale->product->name }}</th>

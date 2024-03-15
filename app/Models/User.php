@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Market\Payment;
 use App\Models\Ticket\Ticket;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Ticket\TicketAdmin;
+use App\Models\User\Role;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -35,6 +37,8 @@ class User extends Authenticatable
         'activation',
         'profile_photo_path',
         'password',
+        'email_verified_at',
+        'mobile_verified_at',
     ];
 
     /**

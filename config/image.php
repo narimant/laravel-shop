@@ -19,7 +19,7 @@ return [
     'driver' => \Intervention\Image\Drivers\Gd\Driver::class,
     'index-image-sizes'=>[
         'large'=>['width'=>800,'height'=>600],
-        'medium'=>['width'=>400,'height'=>300],
+        'medium'=>['width'=>350,'height'=>350],
         'small'=>['width'=>80,'height'=>60],
     ],
     'default-current-index-image'=>'medium'
