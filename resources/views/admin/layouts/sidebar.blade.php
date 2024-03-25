@@ -76,10 +76,13 @@
 
 
             <section class="sidebar-part-title">بخش محتوی</section>
+            @role('operator')
             <a href="{{ route('admin.content.category.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>دسته بندی</span>
             </a>
+            @endrole
+
             <a href="{{ route('admin.content.post.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span>پست ها</span>
@@ -116,10 +119,18 @@
                 <i class="fas fa-bars"></i>
                 <span>مشتریان</span>
             </a>
-            <a href="{{ route('admin.user.role.index') }}" class="sidebar-link">
-                <i class="fas fa-bars"></i>
-                <span>سطوح دسترسی</span>
-            </a>
+            <section class="sidebar-group-link">
+                <section class="sidebar-dropdown-toggle">
+                    <i class="fas fa-chart-bar icon"></i>
+                    <span>سطوح دسترسی</span>
+                    <i class="fas fa-angle-left angle"></i>
+                </section>
+                <section class="sidebar-dropdown">
+                    <a href="{{ route('admin.user.role.index') }}">مدیریت نقش ها</a>
+                    <a href="{{ route('admin.user.permission.index') }}">مدیریت دسترسی ها</a>
+                    <a href="{{ route('admin.market.discount.amazingSale') }}">فروش شگفت انگیز</a>
+                </section>
+            </section>
 
 
 
@@ -128,11 +139,11 @@
                 <i class="fas fa-bars"></i>
                 <span> دسته بندی تیکت ها </span>
             </a>
-              <a href="{{ route('admin.ticket.priority.index') }}" class="sidebar-link">
+            <a href="{{ route('admin.ticket.priority.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span> اولویت تیکت ها </span>
             </a>
-              <a href="{{ route('admin.ticket.admin.index') }}" class="sidebar-link">
+            <a href="{{ route('admin.ticket.admin.index') }}" class="sidebar-link">
                 <i class="fas fa-bars"></i>
                 <span> ادمین تیکت ها </span>
             </a>

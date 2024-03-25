@@ -71,6 +71,8 @@
                                 </section>
                             </section>
                             <section class="product-info">
+                                <form id="add_to_cart" action="{{ route('customer.sales-process.add-to-cart', $product) }}" method="post" class="product-info">
+                                    @csrf
 
                                 @php
                                 $colors = $product->colors()->get();
@@ -115,7 +117,31 @@
                                     <i class="fa fa-store-alt cart-product-selected-store me-1"></i> <span>کالا ناموجود</span>
                                     @endif
                                 </p>
-                                <p><a class="btn btn-light  btn-sm text-decoration-none" href="#"><i class="fa fa-heart text-danger"></i> افزودن به علاقه مندی</a></p>
+                                <p>
+
+                                    @guest
+                                    <section class="product-add-to-favorite position-relative" style="top: 0">
+                                        <button type="button" class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $product) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="اضافه از علاقه مندی">
+                                                <i class="fa fa-heart"></i>
+                                            </button>
+                                        </section>
+                                        @endguest
+                                        @auth
+                                            @if ($product->user->contains(auth()->user()->id))
+                                            <section class="product-add-to-favorite position-relative" style="top: 0">
+                                                <button type="button" class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $product) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="حذف از علاقه مندی">
+                                                    <i class="fa fa-heart text-danger"></i>
+                                                </button>
+                                            </section>
+                                            @else
+                                            <section class="product-add-to-favorite position-relative" style="top: 0">
+                                                <button type="button" class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $product) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="اضافه به علاقه مندی">
+                                                    <i class="fa fa-heart"></i>
+                                                </button>
+                                            </section>
+                                            @endif
+                                        @endauth
+                                </p>
                                 <section>
                                     <section class="cart-product-number d-inline-block ">
                                         <button class="cart-number cart-number-down" type="button">-</button>
@@ -160,11 +186,12 @@
 
                             <section class="">
                                 @if($product->marketable_number > 0)
-                                <a id="next-level" href="#" class="btn btn-danger d-block">افزودن به سبد خرید</a>
+                                <button id="next-level" class="btn btn-danger d-block w-100" onclick="document.getElementById('add_to_cart').submit();">افزودن به سبد خرید</button>
                                 @else
-                                <a id="next-level" href="#" class="btn btn-secondary disabled d-block">محصول نا موجود میباشد</a>
+                                <button id="next-level" class="btn btn-secondary disabled d-block">محصول نا موجود میباشد</button>
                                 @endif
                             </section>
+                        </form>
 
                         </section>
                     </section>
@@ -205,8 +232,29 @@
                                 <section class="lazyload-item-wrapper">
                                     <section class="product">
                                         <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section>
-                                        <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section>
-                                        <a class="product-link" href="#">
+                                        @guest
+                                        <section class="product-add-to-favorite">
+                                            <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="اضافه از علاقه مندی">
+                                                <i class="fa fa-heart"></i>
+                                            </button>
+                                        </section>
+                                        @endguest
+                                        @auth
+                                            @if ($relatedProduct->user->contains(auth()->user()->id))
+                                            <section class="product-add-to-favorite">
+                                                <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="حذف از علاقه مندی">
+                                                    <i class="fa fa-heart text-danger"></i>
+                                                </button>
+                                            </section>
+                                            @else
+                                            <section class="product-add-to-favorite">
+                                                <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $relatedProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="اضافه به علاقه مندی">
+                                                    <i class="fa fa-heart"></i>
+                                                </button>
+                                            </section>
+                                            @endif
+                                        @endauth
+                                           <a class="product-link" href="#">
                                             <section class="product-image">
                                                 <img class="" src="{{ asset($relatedProduct->image['indexArray']['medium']) }}" alt="">
                                             </section>
@@ -215,11 +263,9 @@
                                                 <section class="product-price">{{ priceFormat($relatedProduct->price) }} تومان</section>
                                             </section>
                                             <section class="product-colors">
-                                                <section class="product-colors-item" style="background-color: yellow;"></section>
-                                                <section class="product-colors-item" style="background-color: green;"></section>
-                                                <section class="product-colors-item" style="background-color: white;"></section>
-                                                <section class="product-colors-item" style="background-color: blue;"></section>
-                                                <section class="product-colors-item" style="background-color: red;"></section>
+                                                @foreach ($relatedProduct->colors()->get() as $color)
+                                                <section class="product-colors-item" style="background-color: {{ $color->color }};"></section>
+                                                @endforeach
                                             </section>
                                         </a>
                                     </section>
@@ -428,6 +474,25 @@
 </section>
 <!-- end description, features and comments -->
 
+
+<section class="position-fixed p-4 flex-row-reverse" style="z-index: 909999999; left: 0; top: 3rem; width: 26rem; max-width: 80%;">
+    <div class="toast"  data-delay="7000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">فروشگاه</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <strong class="ml-auto">
+                برای افزودن کالا به لیست علاقه مندی ها باید ابتدا وارد حساب کاربری خود شوید
+                <br>
+                <a href="{{ route('auth.customer.login-register-form') }}" class="text-dark">
+                    ثبت نام / ورود
+                </a>
+            </strong>
+        </div>
+      </div>
+</section>
+
 @endsection
 
 @section('script')
@@ -496,5 +561,57 @@
         //convert to persian
         return number.toString().replace(/\d/g, x => farsiDigits[x]);
     }
+
+</script>
+
+
+<script>
+    $('.product-add-to-favorite button').click(function() {
+       var url = $(this).attr('data-url');
+       var element = $(this);
+       $.ajax({
+           url : url,
+           success : function(result){
+            if(result.status == 1)
+            {
+                $(element).children().first().addClass('text-danger');
+                $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
+                $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
+            }
+            else if(result.status == 2)
+            {
+                $(element).children().first().removeClass('text-danger')
+                $(element).attr('data-original-title', 'افزودن از علاقه مندی ها');
+                $(element).attr('data-bs-original-title', 'افزودن از علاقه مندی ها');
+            }
+            else if(result.status == 3)
+            {
+                $('.toast').toast('show');
+            }
+           }
+       })
+    })
+</script>
+
+<script>
+
+
+//start product introduction, features and comment
+$(document).ready(function() {
+    var s = $("#introduction-features-comments");
+    var pos = s.position();
+    $(window).scroll(function() {
+        var windowpos = $(window).scrollTop();
+
+        if (windowpos >= pos.top) {
+            s.addClass("stick");
+        } else {
+            s.removeClass("stick");
+        }
+    });
+});
+//end product introduction, features and comment
+
+
 </script>
 @endsection

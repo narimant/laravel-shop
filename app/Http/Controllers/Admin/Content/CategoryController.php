@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Content;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Content\PostCategory;
 use App\Http\Requests\Admin\Content\PostCategoryRequest;
 use App\Http\Services\Image\ImageService;
+use App\Models\Content\PostCategory;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -18,8 +17,15 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
-        return view('admin.content.category.index', compact('postCategories'));
+        $user = auth()->user();
+        if ($user->can('show-category')) {
+
+            $postCategories = PostCategory::orderBy('created_at', 'desc')->simplePaginate(15);
+            return view('admin.content.category.index', compact('postCategories'));
+        } else {
+            abort(403);
+        }
+
     }
 
     /**
@@ -29,6 +35,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        // $imageCache = new ImageCacheService();
+        // return $imageCache->cache('1.png');
         return view('admin.content.category.create');
     }
 
@@ -42,9 +50,14 @@ class CategoryController extends Controller
     {
         $inputs = $request->all();
         if ($request->hasFile('image')) {
-            $imageService->setExclusiveDirectory('images'.DIRECTORY_SEPARATOR.'post-category');
-            // $result=$imageService->fitAndSave($request->file('image'),600,300);
-            $result=$imageService->createIndexAndSave($request->file('image'));
+            $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post-category');
+            // $result = $imageService->save($request->file('image'));
+            // $result = $imageService->fitAndSave($request->file('image'), 600, 150);
+            // exit;
+            $result = $imageService->createIndexAndSave($request->file('image'));
+        }
+        if ($result === false) {
+            return redirect()->route('admin.content.category.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
         }
         $inputs['image'] = $result;
         $postCategory = PostCategory::create($inputs);
@@ -84,30 +97,26 @@ class CategoryController extends Controller
     {
         $inputs = $request->all();
 
-        if($request->hasFile('image'))
-        {
-            if(!empty($postCategory->image))
-            {
+        if ($request->hasFile('image')) {
+            if (!empty($postCategory->image)) {
                 $imageService->deleteDirectoryAndFiles($postCategory->image['directory']);
             }
             $imageService->setExclusiveDirectory('images' . DIRECTORY_SEPARATOR . 'post-category');
             $result = $imageService->createIndexAndSave($request->file('image'));
-            if($result === false)
-            {
+            if ($result === false) {
                 return redirect()->route('admin.content.category.index')->with('swal-error', 'آپلود تصویر با خطا مواجه شد');
             }
             $inputs['image'] = $result;
-        }
-        else{
-            if(isset($inputs['currentImage']) && !empty($postCategory->image))
-            {
+        } else {
+            if (isset($inputs['currentImage']) && !empty($postCategory->image)) {
                 $image = $postCategory->image;
                 $image['currentImage'] = $inputs['currentImage'];
                 $inputs['image'] = $image;
             }
         }
+        // $inputs['slug'] = null;
         $postCategory->update($inputs);
-        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');;
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');
     }
 
     /**
@@ -121,7 +130,6 @@ class CategoryController extends Controller
         $result = $postCategory->delete();
         return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت حذف شد');
     }
-
 
     public function status(PostCategory $postCategory)
     {
@@ -137,5 +145,7 @@ class CategoryController extends Controller
         } else {
             return response()->json(['status' => false]);
         }
+
     }
 }
+ 

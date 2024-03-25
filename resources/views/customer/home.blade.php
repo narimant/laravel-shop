@@ -4,8 +4,23 @@
 @section('content')
 
 
+
+
     <!-- start slideshow -->
     <section class="container-xxl my-4">
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        @if(session('danger'))
+        <div class="alert alert-danger">
+            {{ session('danger') }}
+        </div>
+        @endif
+
+
         <section class="row">
             <section class="col-md-8 pe-md-1 ">
                 <section id="slideshow" class="owl-carousel owl-theme">
@@ -65,11 +80,29 @@
                                     <section class="lazyload-item-wrapper">
                                         <section class="product">
                                             {{-- <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section> --}}
+                                            @guest
                                             <section class="product-add-to-favorite">
-                                                <button class="btn btn-light btn-sm text-decoration-none add_to_favorite" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی">
-                                                    <i class="fa fa-heart text-dark"></i>
+                                                <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="اضافه از علاقه مندی">
+                                                    <i class="fa fa-heart"></i>
                                                 </button>
                                             </section>
+                                            @endguest
+                                            @auth
+                                                @if ($mostVisitedProduct->user->contains(auth()->user()->id))
+                                                <section class="product-add-to-favorite">
+                                                    <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="حذف از علاقه مندی">
+                                                        <i class="fa fa-heart text-danger"></i>
+                                                    </button>
+                                                </section>
+                                                @else
+                                                <section class="product-add-to-favorite">
+                                                    <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $mostVisitedProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="اضافه به علاقه مندی">
+                                                        <i class="fa fa-heart"></i>
+                                                    </button>
+                                                </section>
+                                                @endif
+                                            @endauth
+
                                             <a class="product-link" href="{{ route('customer.market.product', $mostVisitedProduct) }}">
                                                 <section class="product-image">
                                                     <img class="" src="{{ asset($mostVisitedProduct->image['indexArray']['medium']) }}" alt="{{ $mostVisitedProduct->name }}">
@@ -152,8 +185,29 @@
                                     <section class="lazyload-item-wrapper">
                                         <section class="product">
                                             {{-- <section class="product-add-to-cart"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به سبد خرید"><i class="fa fa-cart-plus"></i></a></section> --}}
-                                            {{-- <section class="product-add-to-favorite"><a href="#" data-bs-toggle="tooltip" data-bs-placement="left" title="افزودن به علاقه مندی"><i class="fa fa-heart"></i></a></section> --}}
-                                            <a class="product-link" href="{{ route('customer.market.product', $offerProduct) }}">
+                                            @guest
+                                            <section class="product-add-to-favorite">
+                                                <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $offerProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="اضافه از علاقه مندی">
+                                                    <i class="fa fa-heart"></i>
+                                                </button>
+                                            </section>
+                                            @endguest
+                                            @auth
+                                                @if ($offerProduct->user->contains(auth()->user()->id))
+                                                <section class="product-add-to-favorite">
+                                                    <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $offerProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="حذف از علاقه مندی">
+                                                        <i class="fa fa-heart text-danger"></i>
+                                                    </button>
+                                                </section>
+                                                @else
+                                                <section class="product-add-to-favorite">
+                                                    <button class="btn btn-light btn-sm text-decoration-none" data-url="{{ route('customer.market.add-to-favorite', $offerProduct) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="اضافه به علاقه مندی">
+                                                        <i class="fa fa-heart"></i>
+                                                    </button>
+                                                </section>
+                                                @endif
+                                            @endauth
+                                                <a class="product-link" href="{{ route('customer.market.product', $offerProduct) }}">
                                                 <section class="product-image">
                                                     <img class="" src="{{ asset($offerProduct->image['indexArray']['medium']) }}" alt="{{ $offerProduct->name }}">
                                                 </section>
@@ -245,6 +299,25 @@
     <!-- end brand part-->
 
 
+    <section class="position-fixed p-4 flex-row-reverse" style="z-index: 909999999; right: 0; top: 3rem; width: 26rem; max-width: 80%;">
+        <div class="toast"  data-delay="7000" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <strong class="me-auto">فروشگاه</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <strong class="ml-auto">
+                    برای افزودن کالا به لیست علاقه مندی ها باید ابتدا وارد حساب کاربری خود شوید
+                    <br>
+                    <a href="{{ route('auth.customer.login-register-form') }}" class="text-dark">
+                        ثبت نام / ورود
+                    </a>
+                </strong>
+            </div>
+          </div>
+    </section>
+
+
 
 
 @endsection
@@ -252,8 +325,30 @@
 @section('script')
 
 <script>
-    $('.add_to_favorite').click(function() {
-        alert('hi')
+    $('.product-add-to-favorite button').click(function() {
+       var url = $(this).attr('data-url');
+       var element = $(this);
+       $.ajax({
+           url : url,
+           success : function(result){
+            if(result.status == 1)
+            {
+                $(element).children().first().addClass('text-danger');
+                $(element).attr('data-original-title', 'حذف از علاقه مندی ها');
+                $(element).attr('data-bs-original-title', 'حذف از علاقه مندی ها');
+            }
+            else if(result.status == 2)
+            {
+                $(element).children().first().removeClass('text-danger')
+                $(element).attr('data-original-title', 'افزودن از علاقه مندی ها');
+                $(element).attr('data-bs-original-title', 'افزودن از علاقه مندی ها');
+            }
+            else if(result.status == 3)
+            {
+                $('.toast').toast('show');
+            }
+           }
+       })
     })
 </script>
 
