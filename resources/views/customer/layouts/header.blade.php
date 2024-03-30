@@ -845,13 +845,8 @@
                         </section>
                     </section>
                     <section class="border-start my-2 mx-1"></section>
-                    <section class="navbar-item"><a href="#">سوپرمارکت</a></section>
-                    <section class="navbar-item"><a href="#">تخفیف ها و پیشنهادها</a></section>
-                    <section class="navbar-item"><a href="#">آمازون من</a></section>
-                    <section class="navbar-item"><a href="#">آمازون پلاس</a></section>
-                    <section class="navbar-item"><a href="#">درباره ما</a></section>
-                    <section class="navbar-item"><a href="#">فروشنده شوید</a></section>
-                    <section class="navbar-item"><a href="#">فرصت های شغلی</a></section>
+                    <section class="navbar-item"><a href="#">وبلاگ</a></section>
+
 
                 </section>
 

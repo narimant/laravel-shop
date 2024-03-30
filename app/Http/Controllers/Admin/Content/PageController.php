@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin\content;
+namespace App\Http\Controllers\Admin\content;
 
 use App\Models\Content\Page;
 use Illuminate\Http\Request;
