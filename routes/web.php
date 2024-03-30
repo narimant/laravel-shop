@@ -67,7 +67,7 @@ use App\Http\Controllers\Customer\Profile\TicketController as ProfileTicketContr
 |--------------------------------------------------------------------------
  */
 
-Route::prefix('admin')->namespace('Admin')->group(function () {
+Route::prefix('admin')->namespace('Admin')->middleware('admin')->group(function () {
 
     // Route::get('/', 'AdminDashboardController@index')->name('admin.home');
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.home');

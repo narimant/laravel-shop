@@ -129,6 +129,7 @@ class User extends Authenticatable
     //     }
     // }
 
+
     public function orderItems()
     {
         return $this->hasManyThrough(OrderItem::class, Order::class);
