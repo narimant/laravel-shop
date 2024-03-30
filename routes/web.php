@@ -44,9 +44,11 @@ use App\Http\Controllers\Admin\Content\CommentController as ContentCommentContro
 use App\Http\Controllers\Customer\Market\ProductController as MarketProductController;
 use App\Http\Controllers\Admin\Content\CategoryController as ContentCategoryController;
 use App\Http\Controllers\Customer\Profile\AddressController as ProfileAddressController;
+use App\Http\Controllers\Customer\Profile\CompareController;
 use App\Http\Controllers\Customer\Profile\FavoriteController;
 use App\Http\Controllers\Customer\Profile\OrderController as ProfileOrderController;
 use App\Http\Controllers\Customer\Profile\ProfileController;
+use App\Http\Controllers\Customer\Profile\TicketController as ProfileTicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -368,6 +370,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::put('/update/{email}', [EmailController::class, 'update'])->name('admin.notify.email.update');
             Route::delete('/destroy/{email}', [EmailController::class, 'destroy'])->name('admin.notify.email.destroy');
             Route::get('/status/{email}', [EmailController::class, 'status'])->name('admin.notify.email.status');
+            Route::get('/send-mail/{email}', [EmailController::class, 'sendMail'])->name('admin.notify.email.send-mail');
         });
 
         //email file
@@ -454,7 +457,8 @@ Route::namespace ('Auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'home'])->name('customer.home');
-
+Route::get('/products/{category?}', [HomeController::class, 'products'])->name('customer.products');
+Route::get('/page/{page:slug}', [HomeController::class, 'page'])->name('customer.page');
 Route::namespace ('SalesProcess')->group(function () {
 
     //cart
@@ -489,17 +493,25 @@ Route::namespace ('Market')->group(function () {
     Route::get('/product/{product:slug}', [MarketProductController::class, 'product'])->name('customer.market.product');
     Route::post('/add-comment/prodcut/{product:slug}', [MarketProductController::class, 'addComment'])->name('customer.market.add-comment');
     Route::get('/add-to-favorite/prodcut/{product:slug}', [MarketProductController::class, 'addToFavorite'])->name('customer.market.add-to-favorite');
-
+    Route::get('/add-to-compare/prodcut/{product:slug}', [MarketProductController::class, 'addToCompare'])->name('customer.market.add-to-compare');
+    Route::post('/add-rate/prodcut/{product:slug}', [MarketProductController::class, 'addRate'])->name('customer.market.add-rate');
 });
 
 Route::namespace ('Profile')->group(function () {
 
     Route::get('/orders', [ProfileOrderController::class, 'index'])->name('customer.profile.orders');
     Route::get('/my-favorites', [FavoriteController::class, 'index'])->name('customer.profile.my-favorites');
+    Route::get('/my-compares', [CompareController::class, 'index'])->name('customer.profile.my-compares');
     Route::get('/my-favorites/delete/{product}', [FavoriteController::class, 'delete'])->name('customer.profile.my-favorites.delete');
     Route::get('/profile', [ProfileController::class, 'index'])->name('customer.profile.profile');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('customer.profile.profile.update');
     Route::get('/my-addresses', [ProfileAddressController::class, 'index'])->name('customer.profile.my-addresses');
+    Route::get('/my-tickets', [ProfileTicketController::class, 'index'])->name('customer.profile.my-tickets');
+    Route::get('my-tickets/show/{ticket}', [ProfileTicketController::class, 'show'])->name('customer.profile.my-tickets.show');
+    Route::post('my-tickets/answer/{ticket}', [ProfileTicketController::class, 'answer'])->name('customer.profile.my-tickets.answer');
+    Route::get('my-tickets/change/{ticket}', [ProfileTicketController::class, 'change'])->name('customer.profile.my-tickets.change');
+    Route::get('my-tickets/create', [ProfileTicketController::class, 'create'])->name('customer.profile.my-tickets.create');
+    Route::post('my-tickets/store', [ProfileTicketController::class, 'store'])->name('customer.profile.my-tickets.store');
 
 });
 

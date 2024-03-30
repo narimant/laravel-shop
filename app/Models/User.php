@@ -5,11 +5,15 @@ namespace App\Models;
 use App\Models\User\Role;
 use App\Models\Market\Order;
 use App\Models\Ticket\Ticket;
+use App\Models\Market\Compare;
 use App\Models\Market\Product;
 use App\Models\User\Permission;
+use App\Models\Market\OrderItem;
+use App\Models\Market\Payment;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Ticket\TicketAdmin;
 use Laravel\Jetstream\HasProfilePhoto;
+
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use App\Traits\Permissions\HasPermissionsTrait;
@@ -23,6 +27,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
 
     use HasPermissionsTrait;
 
@@ -96,10 +101,6 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-
-
-
-
     public function payments()
     {
         return $this->hasMany(Payment::class);
@@ -127,4 +128,24 @@ class User extends Authenticatable
     //         return false;
     //     }
     // }
+
+    public function orderItems()
+    {
+        return $this->hasManyThrough(OrderItem::class, Order::class);
+    }
+
+    public function isUserPurchedProduct($product_id)
+    {
+        $productIds = collect();
+        foreach ($this->orderItems()->where('product_id', $product_id)->get() as $item) {
+            $productIds->push($item->product_id);
+        }
+        $productIds = $productIds->unique();
+        return $productIds;
+    }
+
+    public function compare()
+    {
+        return $this->hasOne(Compare::class);
+    }
 }

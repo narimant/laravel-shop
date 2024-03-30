@@ -8,19 +8,19 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-      <li class="breadcrumb-item font-size-12"> <a href="#">اطلاع رسانی</a></li>
-      <li class="breadcrumb-item font-size-12 active" aria-current="page"> اطلاعیه ایمیلی</li>
+        <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
+        <li class="breadcrumb-item font-size-12"> <a href="#">اطلاع رسانی</a></li>
+        <li class="breadcrumb-item font-size-12 active" aria-current="page"> اطلاعیه ایمیلی</li>
     </ol>
-  </nav>
+</nav>
 
 
-  <section class="row">
+<section class="row">
     <section class="col-12">
         <section class="main-body-container">
             <section class="main-body-container-header">
                 <h5>
-                   اطلاعیه ایمیلی
+                    اطلاعیه ایمیلی
                 </h5>
             </section>
 
@@ -38,7 +38,7 @@
                             <th>#</th>
                             <th>عنوان اطلاعیه</th>
                             <th>متن ایمیل</th>
-                            <th>تاریخ ارسال	</th>
+                            <th>تاریخ ارسال </th>
                             <th>وضعیت</th>
                             <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
                         </tr>
@@ -53,19 +53,28 @@
                             <td>{{ jalaliDate($email->published_at, 'H:i:s Y-m-d') }}</td>
                             <td>
                                 <label>
-                                    <input id="{{ $email->id }}" onchange="changeStatus({{ $email->id }})" data-url="{{ route('admin.notify.email.status', $email->id) }}" type="checkbox" @if ($email->status === 1)
+                                    <input id="{{ $email->id }}" onchange="changeStatus({{ $email->id }})"
+                                        data-url="{{ route('admin.notify.email.status', $email->id) }}" type="checkbox"
+                                        @if ($email->status === 1)
                                     checked
                                     @endif>
                                 </label>
                             </td>
                             <td class="width-16-rem text-left">
-                                <a href="{{ route('admin.notify.email-file.index', $email->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-file"></i> فایل های ضمیمه شده</a>
-                                <a href="{{ route('admin.notify.email.edit', $email->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                <form class="d-inline" action="{{ route('admin.notify.email.destroy', $email->id) }}" method="post">
+                                <a href="{{ route('admin.notify.email-file.index', $email->id) }}"
+                                    class="btn btn-warning btn-sm"><i class="fa fa-file"></i> فایل های ضمیمه شده</a>
+                                <a href="{{ route('admin.notify.email.edit', $email->id) }}"
+                                    class="btn btn-info btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                <form class="d-inline" action="{{ route('admin.notify.email.destroy', $email->id) }}"
+                                    method="post">
                                     @csrf
                                     {{ method_field('delete') }}
-                                <button class="btn btn-danger btn-sm delete" type="submit"><i class="fa fa-trash-alt"></i> حذف</button>
-                            </form>                            </td>
+                                    <button class="btn btn-danger btn-sm delete" type="submit"><i
+                                            class="fa fa-trash-alt"></i> حذف</button>
+                                </form>
+                                <a href="{{ route('admin.notify.email.send-mail', $email) }}"
+                                    class="btn btn-sm btn-primary">ارسال</a>
+                            </td>
                         </tr>
 
                         @endforeach
@@ -84,8 +93,8 @@
 
 @section('script')
 
-    <script type="text/javascript">
-        function changeStatus(id){
+<script type="text/javascript">
+    function changeStatus(id){
             var element = $("#" + id)
             var url = element.attr('data-url')
             var elementValue = !element.prop('checked');
@@ -149,7 +158,7 @@
                             })
             }
         }
-    </script>
+</script>
 
 
 @include('admin.alerts.sweetalert.delete-confirm', ['className' => 'delete'])
