@@ -13,7 +13,7 @@
             <a href="{{ route('admin.home') }}" class="sidebar-link">
                 <i class="fas fa-home"></i>
                 <span>خانه</span>
-            </a>
+            </a>ّ
 
             <section class="sidebar-part-title">بخش فروش</section>
 
@@ -25,7 +25,7 @@
                 </section>
                 <section class="sidebar-dropdown">
                     <a href="{{ route('admin.market.category.index') }}">دسته بندی</a>
-                    <a href="{{ route('admin.market.property.index') }}">فرم کالا</a>
+                    <a href="{{ route('admin.market.property.index') }}"> ویژگی های متغیر کالا</a>
                     <a href="{{ route('admin.market.brand.index') }}">برندها</a>
                     <a href="{{ route('admin.market.product.index') }}">کالاها</a>
                     <a href="{{ route('admin.market.store.index') }}">انبار</a>

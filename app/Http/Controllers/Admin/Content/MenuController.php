@@ -9,6 +9,19 @@ use App\Http\Requests\Admin\Content\MenuRequest;
 
 class MenuController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware('role:,content_menu_index')->only('index');
+        $this->middleware('role:,content_menu_create')->only('create');
+        $this->middleware('role:,content_menu_store')->only('store');
+        $this->middleware('role:,content_menu_edit')->only('edit');
+        $this->middleware('role:,content_menu_update')->only('update');
+        $this->middleware('role:,content_menu_destroy')->only('destroy');
+
+
+    }
     /**
      * Display a listing of the resource.
      *

@@ -9,6 +9,12 @@ use App\Http\Requests\Admin\Content\CommentRequest;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:,shop_comment_index')->only('index');
+        $this->middleware('role:,shop_comment_show')->only('show');
+        $this->middleware('role:,shop_comment_status')->only('status');
+    }
     /**
      * Display a listing of the resource.
      *

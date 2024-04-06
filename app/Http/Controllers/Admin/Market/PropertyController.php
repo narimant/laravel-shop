@@ -10,6 +10,17 @@ use App\Models\Market\CategoryAttribute;
 
 class PropertyController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:,shop_property_index')->only('index');
+        $this->middleware('role:,shop_property_create')->only('create');
+        $this->middleware('role:,shop_property_store')->only('store');
+        $this->middleware('role:,shop_property_edit')->only('edit');
+        $this->middleware('role:,shop_property_update')->only('update');
+        $this->middleware('role:,shop_property_delete')->only('destroy');
+
+    }
     /**
      * Display a listing of the resource.
      *

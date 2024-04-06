@@ -15,6 +15,37 @@ use App\Http\Requests\Admin\Market\CopanRequest;
 
 class DiscountController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:,shop_discount_copan_index')->only('copan');
+        $this->middleware('role:,shop_discount_copan_create')->only('copanCreate');
+        $this->middleware('role:,shop_discount_copan_store')->only('copanStore');
+        $this->middleware('role:,shop_discount_copan_edit')->only('copanEdit');
+        $this->middleware('role:,shop_discount_copan_Update')->only('copanUpdate');
+        $this->middleware('role:,shop_discount_copan_delete')->only('copanDestroy');
+
+        $this->middleware('role:,shop_common_discount_index')->only('commonDiscount');
+        $this->middleware('role:,shop_common_discount_create')->only('commonDiscountCreate');
+        $this->middleware('role:,shop_common_discount_store')->only('commonDiscountStore');
+        $this->middleware('role:,shop_common_discount_edit')->only('commonDiscountEdit');
+        $this->middleware('role:,shop_common_discount_Update')->only('commonDiscountUpdate');
+        $this->middleware('role:,shop_common_discount_delete')->only('commonDiscountDestroy');
+
+        $this->middleware('role:,shop_amazing_sale_index')->only('amazingSale');
+        $this->middleware('role:,shop_amazing_sale_create')->only('amazingSaleCreate');
+        $this->middleware('role:,shop_amazing_sale_store')->only('amazingSaleStore');
+        $this->middleware('role:,shop_amazing_sale_edit')->only('amazingSaleEdit');
+        $this->middleware('role:,shop_amazing_sale_Update')->only('amazingSaleUpdate');
+        $this->middleware('role:,shop_amazing_sale_delete')->only('amazingSaleDestroy');
+
+
+
+
+
+
+
+    }
+
     public function copan()
     {
         $copans = Copan::all();

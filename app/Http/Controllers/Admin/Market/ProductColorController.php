@@ -9,6 +9,16 @@ use App\Http\Controllers\Controller;
 
 class ProductColorController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:,shop_product_color_index')->only('index');
+        $this->middleware('role:,shop_product_color_create')->only('create');
+        $this->middleware('role:,shop_product_color_store')->only('store');
+        $this->middleware('role:,shop_product_color_delete')->only('destroy');
+
+    }
+
     /**
      * Display a listing of the resource.
      *

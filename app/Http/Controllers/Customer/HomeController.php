@@ -9,6 +9,9 @@ use App\Models\Market\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Content\Page;
 use App\Models\Market\ProductCategory;
+use App\Models\User\Permission;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -19,12 +22,13 @@ class HomeController extends Controller
     {
 
 
+
         $slideShowImages = Banner::where('position', 0)->where('status', 1)->get();
         $topBanners = Banner::where('position', 1)->where('status', 1)->take(2)->get();
         $middleBanners = Banner::where('position', 2)->where('status', 1)->take(2)->get();
         $bottomBanner = Banner::where('position', 3)->where('status', 1)->first();
 
-        $brands = Brand::all();
+        $brands = Brand::where('status',1)->get();
 
         $mostVisitedProducts = Product::latest()->take(10)->get();
         $offerProducts = Product::latest()->take(10)->get();

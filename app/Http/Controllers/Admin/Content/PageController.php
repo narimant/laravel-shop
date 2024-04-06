@@ -9,6 +9,19 @@ use App\Http\Requests\Admin\Content\PageRequest;
 
 class PageController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware('role:,content_page_index')->only('index');
+        $this->middleware('role:,content_page_create')->only('create');
+        $this->middleware('role:,content_page_store')->only('store');
+        $this->middleware('role:,content_page_edit')->only('edit');
+        $this->middleware('role:,content_page_update')->only('update');
+        $this->middleware('role:,content_page_destroy')->only('destroy');
+
+
+    }
     /**
      * Display a listing of the resource.
      *

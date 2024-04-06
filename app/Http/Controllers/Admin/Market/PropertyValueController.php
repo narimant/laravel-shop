@@ -10,6 +10,17 @@ use App\Http\Requests\Admin\Market\CategoryValueRequest;
 
 class PropertyValueController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:,shop_property_value_index')->only('index');
+        $this->middleware('role:,shop_property_value_create')->only('create');
+        $this->middleware('role:,shop_property_value_store')->only('store');
+        $this->middleware('role:,shop_property_value_edit')->only('edit');
+        $this->middleware('role:,shop_property_value_update')->only('update');
+        $this->middleware('role:,shop_property_value_delete')->only('destroy');
+
+    }
     /**
      * Display a listing of the resource.
      *

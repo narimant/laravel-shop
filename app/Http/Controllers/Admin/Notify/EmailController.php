@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\notify;
+namespace App\Http\Controllers\Admin\Notify;
 
 use App\Models\User;
 use App\Models\Notify\Email;

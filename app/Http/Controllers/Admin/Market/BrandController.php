@@ -10,6 +10,15 @@ use App\Http\Requests\Admin\Market\BrandRequest;
 
 class BrandController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:,shop_brand_index')->only('index');
+        $this->middleware('role:,shop_brand_create')->only('create');
+        $this->middleware('role:,shop_brand_store')->only('store');
+        $this->middleware('role:,shop_brand_edit')->only('edit');
+        $this->middleware('role:,shop_brand_update')->only('update');
+        $this->middleware('role:,shop_brand_delete')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

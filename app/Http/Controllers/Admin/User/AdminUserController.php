@@ -13,6 +13,25 @@ use App\Http\Requests\Admin\User\AdminUserRequest;
 
 class AdminUserController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware('role:,admin_user_index')->only('index');
+        $this->middleware('role:,admin_user_create')->only('create');
+        $this->middleware('role:,admin_user_store')->only('store');
+        $this->middleware('role:,admin_user_edit')->only('edit');
+        $this->middleware('role:,admin_user_update')->only('update');
+        $this->middleware('role:,admin_user_destroy')->only('destroy');
+        $this->middleware('role:,admin_user_activation')->only('activation');
+        $this->middleware('role:,admin_user_status')->only('status');
+        $this->middleware('role:,admin_user_roles')->only('roles');
+        $this->middleware('role:,admin_user_roles_tore')->only('rolesStore');
+        $this->middleware('role:,admin_user_permissions')->only('permissions');
+        $this->middleware('role:,admin_user_permissions_store')->only('permissionsStore');
+
+
+    }
     /**
      * Display a listing of the resource.
      *

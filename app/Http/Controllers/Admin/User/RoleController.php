@@ -10,6 +10,21 @@ use App\Http\Requests\Admin\User\RoleRequest;
 
 class RoleController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware('role:,role_user_index')->only('index');
+        $this->middleware('role:,role_user_create')->only('create');
+        $this->middleware('role:,role_user_store')->only('store');
+        $this->middleware('role:,role_user_edit')->only('edit');
+        $this->middleware('role:,role_user_update')->only('update');
+        $this->middleware('role:,role_user_destroy')->only('destroy');
+        $this->middleware('role:,role_permission_user_form')->only('permissionForm');
+        $this->middleware('role:,role_permission_user_update')->only('permissionUpdate');
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -106,6 +121,8 @@ class RoleController extends Controller
 
     public function permissionUpdate(RoleRequest $request, Role $role)
     {
+
+
         $inputs = $request->all();
         $inputs['permissions'] = $inputs['permissions'] ?? [];
         $role->permissions()->sync($inputs['permissions']);

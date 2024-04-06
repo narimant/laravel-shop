@@ -9,6 +9,16 @@ use App\Http\Requests\Admin\Content\CommentRequest;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('role:,content_comment_index')->only('index');
+        $this->middleware('role:,content_comment_show')->only('show');
+        $this->middleware('role:,content_comment_status')->only('status');
+        $this->middleware('role:,content_comment_approved')->only('approved');
+        $this->middleware('role:,content_comment_answer')->only('answer');
+
+    }
     /**
      * Display a listing of the resource.
      *

@@ -47,12 +47,15 @@
                         <tr>
                             <th>{{ $key + 1 }}</th>
                             <td>{{ $role->name }}</td>
-                            <td>
+                            <td class="w-50  ">
                                 @if(empty($role->permissions()->get()->toArray()))
                                 <span class="text-danger">برای این نقش هیچ سطح دسترسی تعریف نشده است</span>
                                 @else
                                 @foreach($role->permissions as $permission)
-                                {{ $permission->name }} <br>
+                               <span class=" ">
+                                 <span style="font-size: 8px">{{ $permission->name }} </span>
+                                 <span style="font-size: 12px">{{ $permission->description }} </span>
+                                </span>
                                 @endforeach
                                 @endif
                                 </td>

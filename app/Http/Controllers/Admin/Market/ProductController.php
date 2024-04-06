@@ -14,6 +14,16 @@ use App\Http\Requests\Admin\Market\ProductRequest;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:,shop_product_index')->only('index');
+        $this->middleware('role:,shop_product_create')->only('create');
+        $this->middleware('role:,shop_product_store')->only('store');
+        $this->middleware('role:,shop_product_edit')->only('edit');
+        $this->middleware('role:,shop_product_update')->only('update');
+        $this->middleware('role:,shop_product_delete')->only('destroy');
+
+    }
     /**
      * Display a listing of the resource.
      *

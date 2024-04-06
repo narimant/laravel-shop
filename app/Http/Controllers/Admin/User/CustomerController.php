@@ -12,6 +12,21 @@ use App\Notifications\NewUserRegistered;
 
 class CustomerController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware('role:,customer_user_index')->only('index');
+        $this->middleware('role:,customer_user_create')->only('create');
+        $this->middleware('role:,customer_user_store')->only('store');
+        $this->middleware('role:,customer_user_edit')->only('edit');
+        $this->middleware('role:,customer_user_update')->only('update');
+        $this->middleware('role:,customer_user_destroy')->only('destroy');
+        $this->middleware('role:,customer_user_activation')->only('activation');
+        $this->middleware('role:,customer_user_status')->only('status');
+
+
+    }
     /**
      * Display a listing of the resource.
      *

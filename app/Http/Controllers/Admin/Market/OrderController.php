@@ -8,6 +8,23 @@ use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:,shop_new_order')->only('newOrders');
+        $this->middleware('role:,shop_sending_order')->only('sending');
+        $this->middleware('role:,shop_unpaid_order')->only('unpaid');
+        $this->middleware('role:,shop_canceled_order')->only('canceled');
+        $this->middleware('role:,shop_returned_order')->only('returned');
+        $this->middleware('role:,shop_all_order')->only('all');
+        $this->middleware('role:,shop_show_order')->only('show');
+        $this->middleware('role:,shop_detail_order')->only('detail');
+        $this->middleware('role:,shop_change_order_status')->only('changeOrderStatus');
+        $this->middleware('role:,cancel_order')->only('cancelOrder');
+        $this->middleware('role:,shop_change_send_status')->only('changeSendStatus');
+
+    }
+
     public function newOrders()
     {
         $orders = Order::where('order_status', 0)->get();

@@ -9,6 +9,17 @@ use App\Http\Requests\Admin\Market\DeliveryRequest;
 
 class DeliveryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:,shop_delivery_index')->only('index');
+        $this->middleware('role:,shop_delivery_create')->only('create');
+        $this->middleware('role:,shop_delivery_store')->only('store');
+        $this->middleware('role:,shop_delivery_edit')->only('edit');
+        $this->middleware('role:,shop_delivery_Update')->only('update');
+        $this->middleware('role:,shop_delivery_delete')->only('destroy');
+        $this->middleware('role:,shop_delivery_status')->only('status');
+    }
     /**
      * Display a listing of the resource.
      *

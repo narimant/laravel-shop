@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Market;
 
-use Illuminate\Http\Request;
+
 use App\Models\Market\Product;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -11,6 +11,16 @@ use App\Http\Requests\Admin\Market\StoreUpdateRequest;
 
 class StoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:,shop_store_index')->only('index');
+        $this->middleware('role:,shop_add_to_store')->only('addToStore');
+        $this->middleware('role:,shop_store_store')->only('store');
+        $this->middleware('role:,shop_store_edit')->only('edit');
+        $this->middleware('role:,shop_store_update')->only('update');
+
+
+    }
     /**
      * Display a listing of the resource.
      *

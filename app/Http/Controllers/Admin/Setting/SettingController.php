@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\setting;
+namespace App\Http\Controllers\Admin\Setting;
 
 use Illuminate\Http\Request;
 use App\Models\Setting\Setting;
@@ -11,6 +11,17 @@ use App\Http\Requests\Admin\Setting\SettingRequest;
 
 class SettingController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware('role:,content_setting_index')->only('index');
+        $this->middleware('role:,content_setting_edit')->only('edit');
+        $this->middleware('role:,content_setting_update')->only('update');
+
+
+
+    }
     /**
      * Display a listing of the resource.
      *

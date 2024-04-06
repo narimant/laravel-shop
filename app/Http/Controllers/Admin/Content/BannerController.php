@@ -10,6 +10,17 @@ use App\Http\Requests\Admin\Content\BannerRequest;
 
 class BannerController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('role:,banner_index')->only('index');
+        $this->middleware('role:,banner_create')->only('create');
+        $this->middleware('role:,banner_store')->only('store');
+        $this->middleware('role:,banner_edit')->only('edit');
+        $this->middleware('role:,banner_update')->only('update');
+        $this->middleware('role:,banner_destroy')->only('destroy');
+        $this->middleware('role:,banner_status')->only('status');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -76,7 +87,6 @@ class BannerController extends Controller
     {
         $positions = Banner::$positions;
         return view('admin.content.banner.edit', compact('banner', 'positions'));
-
     }
 
     /**
@@ -142,5 +152,4 @@ class BannerController extends Controller
             return response()->json(['status' => false]);
         }
     }
-
 }

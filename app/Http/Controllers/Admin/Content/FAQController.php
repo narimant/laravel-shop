@@ -9,6 +9,19 @@ use App\Http\Requests\Admin\Content\FaqRequest;
 
 class FAQController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware('role:,content_faq_index')->only('index');
+        $this->middleware('role:,content_faq_create')->only('create');
+        $this->middleware('role:,content_faq_store')->only('store');
+        $this->middleware('role:,content_faq_edit')->only('edit');
+        $this->middleware('role:,content_faq_update')->only('update');
+        $this->middleware('role:,content_faq_destroy')->only('destroy');
+        $this->middleware('role:,content_faq_status')->only('status');
+
+    }
     /**
      * Display a listing of the resource.
      *

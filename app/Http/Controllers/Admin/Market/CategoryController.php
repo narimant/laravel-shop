@@ -10,6 +10,15 @@ use App\Http\Requests\Admin\Market\ProductCategoryRequest;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:,shop_category_index')->only('index');
+        $this->middleware('role:,shop_category_create')->only('create');
+        $this->middleware('role:,shop_category_store')->only('store');
+        $this->middleware('role:,shop_category_edit')->only('edit');
+        $this->middleware('role:,shop_category_Update')->only('update');
+        $this->middleware('role:,shop_category_delete')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

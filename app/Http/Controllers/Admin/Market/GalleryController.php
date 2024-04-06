@@ -10,6 +10,16 @@ use App\Http\Services\Image\ImageService;
 
 class GalleryController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('role:,shop_gallery_index')->only('index');
+        $this->middleware('role:,shop_gallery_create')->only('create');
+        $this->middleware('role:,shop_gallery_store')->only('store');
+        $this->middleware('role:,shop_gallery_delete')->only('destroy');
+
+    }
     /**
      * Display a listing of the resource.
      *

@@ -8,6 +8,19 @@ use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:,shop_payment_index')->only('index');
+        $this->middleware('role:,shop_payment_offline')->only('offline');
+        $this->middleware('role:,shop_payment_online')->only('online');
+        $this->middleware('role:,shop_payment_cash')->only('cash');
+        $this->middleware('role:,shop_payment_canceled')->only('canceled');
+        $this->middleware('role:,shop_payment_returned')->only('returned');
+        $this->middleware('role:,shop_payment_show')->only('show');
+
+    }
+
     public function index()
     {
         $payments = Payment::all();
